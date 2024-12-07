@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  root "photos#index"
+  root "users#index"
   # Routes for the Like resource:
 
   # CREATE

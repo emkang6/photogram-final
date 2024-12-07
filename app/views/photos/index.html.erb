@@ -67,8 +67,9 @@
   <div>
     <table border="1">
       <tr>
+
         <th>
-          ID
+          Image
         </th>
 
         <th>
@@ -76,27 +77,15 @@
         </th>
 
         <th>
-          Image
-        </th>
-
-        <th>
           Owner
         </th>
 
         <th>
-          Likes count
+          Posted
         </th>
 
         <th>
-          Comments count
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
+          Likes
         </th>
 
         <th>
@@ -105,8 +94,9 @@
 
       <% @list_of_photos.each do |a_photo| %>
       <tr>
+
         <td>
-          <%= a_photo.id %>
+          <img src="<%= a_photo.image %>" height="300px">
         </td>
 
         <td>
@@ -114,26 +104,15 @@
         </td>
 
         <td>
-          <%= a_photo.image %>
-        </td>
-
-        <td>
           <%= a_photo.owner_id %>
-        </td>
-
-        <td>
-          <%= a_photo.likes_count %>
-        </td>
-
-        <td>
-          <%= a_photo.comments_count %>
         </td>
 
         <td>
           <%= time_ago_in_words(a_photo.created_at) %> ago
         </td>
+
         <td>
-          <%= time_ago_in_words(a_photo.updated_at) %> ago
+          <%= a_photo.likes_count %>
         </td>
 
         <td>
