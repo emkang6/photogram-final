@@ -4,7 +4,7 @@
       Photo details
     </h1>
 
-    <div>
+<!--    <div>
       <div>
         <a href="/photos">
           Go back
@@ -12,11 +12,11 @@
       </div>
 
       <div>
-        <a href="/delete_photo/<%= @the_photo.id %>">
+        <a href="/delete_photo/<%#= @the_photo.id %>">
           Delete photo
         </a>
       </div>
-    </div>
+    </div>-->
 
 
     <dl>
@@ -64,14 +64,14 @@
         <%= @the_photo.comments_count %>
       </dd>
 
-      <dt>
+<!--      <dt>
         Fans
       </dt>
       <dd>
-        <% @the_photo.fans.each do |a_fan| %>
-          <p><%= a_fan.name %></p>
-        <% end %>
-      </dd>
+        <%# @the_photo.fans.each do |a_fan| %>-->
+<!--          <p><%#= a_fan.name %></p>-->
+        <%# end %>
+<!--      </dd>-->
 
       <dt>Add a fan</dt>
       <dd>
@@ -85,8 +85,8 @@
   </div>
 </div>
 
-<hr>
-
+<!--<hr>
+-->
 <h2>Comments</h2>
 
 <table>
