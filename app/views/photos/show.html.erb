@@ -64,43 +64,94 @@
         <%= @the_photo.comments_count %>
       </dd>
 
+      <dt>
+        Fans
+      </dt>
+      <dd>
+        <% @the_photo.fans.each do |a_fan| %>
+          <p><%= a_fan.name %></p>
+        <% end %>
+      </dd>
+
+      <dt>Add a fan</dt>
+      <dd>
+
+        <form action="/insert_like" method="post">
+          <input type="hidden" value="<%= @the_photo.id %>" name="query_photo_id">
+          <button>Like</button>
+        </form>
+      </dd>
     </dl>
   </div>
 </div>
 
 <hr>
 
+<h2>Comments</h2>
 
+<table>
+  <tr>
+    <th>
+      Commenter
+    </th>
+
+    <th>
+      Comment
+    </th>
+
+    <th>
+      Posted
+    </th>
+  </tr>
+
+  <% @the_photo.comments.order(created_at: :desc).each do |a_comment| %>
+
+    <tr>
+      <td>
+        <%= a_comment.commenter.username %>
+      </td>
+
+      <td>
+        <%= a_comment.body %>
+      </td>
+
+      <td>
+        <%= a_comment.created_at %>
+      </td>
+    </tr>
+  <% end %>
+</table>
 
 <h3>Add a new comment</h3>
 
 <form action="/add_comment" method="post">
-  <label for="browser_photo_id">Photo ID</label>
-  <input id="browser_photo_id" type=text placeholder="Enter the photo ID" name="input_photo_id" value=<%= @the_photo.id %>>
+  <!--<label for="browser_photo_id">Photo ID</label>-->
+  <input id="browser_photo_id" type="hidden" name="input_photo_id" value=<%= @the_photo.id %>>
 
-  <label for="browser_author_id">Author ID</label>
-  <input id="browser_author_id" type=text placeholder="Enter your author ID" name="input_author_id">
+  <!--<label for="browser_author_id">Author ID</label>-->
+  <input id="browser_author_id" type="hidden" name="input_author_id">
 
   <label for="browser_comment">Comment</label>
   <textarea id="browser_comment" type=text placeholder="Enter a comment..." name="input_comment"></textarea>
 
   <button>Add comment</button>
+  
 </form>
 
 
-<div>
+<!--<div>
   <div>
     <h2>
       Edit photo
     </h2>
 
-    <form action="/modify_photo/<%= @the_photo.id %>"  method="post" >
+    <form action="/modify_photo/<%#= @the_photo.id %>"  method="post" >
       <div>
         <label for="caption_box">
           Caption
         </label>
 
-        <textarea id="caption_box" name="query_caption"><%= @the_photo.caption %></textarea>
+        <textarea id="caption_box" name="query_caption"><%#= @the_photo.caption %></textarea>
       </div>
 
       <div>
@@ -108,7 +159,7 @@
           Image
         </label>
 
-        <input type="text" id="image_box" name="query_image" value="<%= @the_photo.image %>">
+        <input type="text" id="image_box" name="query_image" value="<%#= @the_photo.image %>">
       </div>
 
       <div>
@@ -116,7 +167,7 @@
           Owner
         </label>
 
-        <input type="text" id="owner_id_box" name="query_owner_id" value="<%= @the_photo.owner_id %>">
+        <input type="text" id="owner_id_box" name="query_owner_id" value="<%#= @the_photo.owner_id %>">
       </div>
 
       <div>
@@ -124,7 +175,7 @@
           Likes count
         </label>
 
-        <input type="text" id="likes_count_box" name="query_likes_count" value="<%= @the_photo.likes_count %>">
+        <input type="text" id="likes_count_box" name="query_likes_count" value="<%#= @the_photo.likes_count %>">
       </div>
 
       <div>
@@ -132,14 +183,15 @@
           Comments count
         </label>
 
-        <input type="text" id="comments_count_box" name="query_comments_count" value="<%= @the_photo.comments_count %>">
+        <input type="text" id="comments_count_box" name="query_comments_count" value="<%#= @the_photo.comments_count %>">
       </div>
 
       <button>
         Update photo
-      </button>
-    </form>
+      </button>-->
+<!--    </form>
   </div>
-</div>
-
+</div>-->
+<!--
 <hr>
+-->
