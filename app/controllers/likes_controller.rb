@@ -21,10 +21,11 @@ class LikesController < ApplicationController
     the_like = Like.new
     the_like.fan_id = params.fetch("query_fan_id")
     the_like.photo_id = params.fetch("query_photo_id")
+    photo_id = the_like.photo_id
 
     if the_like.valid?
       the_like.save
-      redirect_to("/likes", { :notice => "Like created successfully." })
+      redirect_to("/photos/#{the_like.photo_id}", { :notice => "Like created successfully." })
     else
       redirect_to("/likes", { :alert => the_like.errors.full_messages.to_sentence })
     end
