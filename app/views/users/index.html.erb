@@ -19,8 +19,9 @@
       Private?
     </th>
 
-    <!--<td></td>-->
     <td></td>
+    <td></td>
+
   </tr>
 
   <% @list_of_users.each do |a_user| %>
@@ -31,15 +32,30 @@
       </td>
 
       <td>
-
       <% if a_user.private== false %>
         No
-
       <% else %>
         Yes
       <%end%>
+      </td>
 
 
+      <td>
+        <% if !current_user.followers.include?(a_user) && !current_user.sent_follow_requests.map(&:recipient_id).include?(a_user.id) %>
+            <form action="/insert_follow_request" method="post">
+              <input type="hidden" name="query_recipient_id" value="<%= a_user.id %>">
+              <button>Follow</button>
+            </form>
+
+        <% elsif current_user.followers.include?(a_user) %>
+
+          <a href="/delete_follow_request/<%= current_user.sent_follow_requests.find_by(recipient_id: a_user.id)&.id%>">
+              Unfollow</a>
+              
+        <% else %>
+
+          Request sent.<a href="/delete_follow_request/<%= current_user.sent_follow_requests.find_by(recipient_id: a_user.id)&.id %>">Cancel</a>
+        <% end %>
       </td>
 
       <td>
