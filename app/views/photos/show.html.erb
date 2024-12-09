@@ -133,15 +133,15 @@
 
 <h3>Add a new comment</h3>
 
-<form action="/add_comment" method="post">
+<form action="/insert_comment" method="post">
   <!--<label for="browser_photo_id">Photo ID</label>-->
-  <input id="browser_photo_id" type="hidden" name="input_photo_id" value=<%= @the_photo.id %>>
+  <input id="browser_photo_id" type="hidden" name="query_photo_id" value=<%= @the_photo.id %>>
 
   <!--<label for="browser_author_id">Author ID</label>-->
-  <input id="browser_author_id" type="hidden" name="input_author_id">
+  <input id="browser_author_id" type="hidden" name="query_author_id" value=<%= current_user.id %>>
 
   <label for="browser_comment">Comment</label>
-  <textarea id="browser_comment" type=text placeholder="Enter a comment..." name="input_comment"></textarea>
+  <textarea id="browser_comment" type=text placeholder="Enter a comment..." name="query_body"></textarea>
 
   <button>Add comment</button>
   
