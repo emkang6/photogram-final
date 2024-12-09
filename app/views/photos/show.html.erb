@@ -76,11 +76,18 @@
 
       <dt>Add a fan</dt>
       <dd>
-
+      <% if !@the_photo.fans.where(id: current_user.id).exists? %>
         <form action="/insert_like" method="post">
           <input type="hidden" value="<%= @the_photo.id %>" name="query_photo_id">
           <input type="hidden" value="<%= current_user.id %>" name="query_fan_id">
-          <button>Like</button>
+        <button>Like</button>
+
+      <% else %>
+        <form action="/delete_like" method="post">
+          <input type="hidden" value="<%= @the_photo.id %>" name="query_photo_id">
+          <input type="hidden" value="<%= current_user.id %>" name="query_fan_id">
+        <button>Unlike</button>
+      <% end %>
         </form>
       </dd>
     </dl>

@@ -47,11 +47,13 @@ class LikesController < ApplicationController
   end
 
   def destroy
-    the_id = params.fetch("path_id")
-    the_like = Like.where({ :id => the_id }).at(0)
+
+    the_photo_id = params.fetch("query_photo_id")
+    the_fan_id = params.fetch("query_fan_id")
+    the_like = Like.find_by(photo_id: the_photo_id, fan_id: the_fan_id)
 
     the_like.destroy
 
-    redirect_to("/likes", { :notice => "Like deleted successfully."} )
+    redirect_to("/photos/#{the_like.photo_id}", { :notice => "Like deleted successfully."} )
   end
 end
