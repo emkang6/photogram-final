@@ -16,11 +16,11 @@
       <%= @the_user.followers.count %>
         <div>
         <!--If you are one of their followers, show Unfollow button-->
-          <% if current_user.followers.include?(@the_user) %>
-            <a href="/delete_follow_request/2415">
-              Unfollow</a>
+          <% if current_user.accepted_sent_follow_requests.exists?(recipient_id: @the_user.id) %>
+            <a href="/delete_follow_request/<%= current_user.sent_follow_requests.find_by(recipient_id: @the_user.id)&.id%>">Unfollow</a>
+            
           <% else %>
-            <a href="/insert_follow_request/2415">
+             <a href="/insert_follow_request/<%= current_user.sent_follow_requests.find_by(recipient_id: @the_user.id)&.id%>">
               Follow</a>
 
           <% end %>
@@ -34,16 +34,16 @@
 <nav>
   <ul>
     <li>
-      <a href="/users/isidro">Profile</a>
+      <a href="/users/<%= @the_user.username %>Profile</a>
     </li>
     <li>
-      <a href="/users/isidro/liked_photos">Liked photos</a>
+      <a href="/users/<%= @the_user.username %>/liked_photos">Liked photos</a>
     </li>
     <li>
-      <a href="/users/isidro/feed">Feed</a>
+      <a href="/users/<%= @the_user.username %>/feed">Feed</a>
     </li>
     <li>
-      <a href="/users/isidro/discover">Discover</a>
+      <a href="/users/<%= @the_user.username %>/discover">Discover</a>
     </li>
   </ul>
 </nav>

@@ -43,17 +43,22 @@
       <td>
         <% if !current_user.followers.include?(a_user) && !current_user.sent_follow_requests.map(&:recipient_id).include?(a_user.id) %>
             <form action="/insert_follow_request" method="post">
-            
+
             <input type="hidden" name="query_sender_id" value="<%= current_user.id %>">
             <input type="hidden" name="query_recipient_id" value="<%= a_user.id %>">
             <input type="hidden" name="query_status" value="pending">
+
               <button>Follow</button>
             </form>
 
-        <% elsif current_user.followers.include?(a_user) %>
+        <% elsif current_user.accepted_sent_follow_requests.exists?(recipient_id: a_user.id) %>
 
           <a href="/delete_follow_request/<%= current_user.sent_follow_requests.find_by(recipient_id: a_user.id)&.id%>">
+
               Unfollow</a>
+
+        <% elsif current_user.sent_follow_requests.exists?(recipient_id: a_user.id, status: 'rejected') %>
+
               
         <% else %>
 
