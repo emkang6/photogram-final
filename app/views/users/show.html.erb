@@ -1,25 +1,64 @@
 <h1><%= @the_user.username %></h1>
 
-<dl>
-  <dt>
+<!--  <dt>
     ID
   </dt>
   <dd>
-    <%= @the_user.id %>
-  </dd>
-
-  <dt>
-    Edit user
+    <%#= @the_user.id %>-->
+<!--  </dd>-->
+<dl>
+  <dt>Private
   </dt>
-  <dd>
-    <form action="/update_user/<%= @the_user.id %>" method="post">
+    <dd><%= @the_user.private %></dd>
+
+    <dt>Followers</dt>
+    <dd>
+      <%= @the_user.followers.count %>
+        <div>
+        <!--If you are one of their followers, show Unfollow button-->
+          <% if current_user.followers.include?(@the_user) %>
+            <a href="/delete_follow_request/2415">
+              Unfollow</a>
+          <% else %>
+            <a href="/insert_follow_request/2415">
+              Follow</a>
+
+          <% end %>
+          </div>
+    </dd>
+
+  <dt>Following</dt>
+  <dd><%= @the_user.leaders.count %></dd>
+</dl>
+
+<nav>
+  <ul>
+    <li>
+      <a href="/users/isidro">Profile</a>
+    </li>
+    <li>
+      <a href="/users/isidro/liked_photos">Liked photos</a>
+    </li>
+    <li>
+      <a href="/users/isidro/feed">Feed</a>
+    </li>
+    <li>
+      <a href="/users/isidro/discover">Discover</a>
+    </li>
+  </ul>
+</nav>
+
+<!--  <dt>
+    Edit user
+  </dt>-->
+<!--  <dd>
+    <form action="/update_user/<%#= @the_user.id %>" method="post">
       <label for="browser_username">Username</label>
-      <input id="browser_username" type="text" name="input_username" value=<%= @the_user.username %>>
+      <input id="browser_username" type="text" name="input_username" value=<%#= @the_user.username %>>
 
       <button>Update user</button>
     </form>
-  </dd>
-</dl>
+  </dd>-->
 
 <h2>Own photos (<%= @the_user.own_photos.count %>)</h2>
 
@@ -72,4 +111,3 @@
     </tr>
   <% end %>
 </table>
-
