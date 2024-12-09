@@ -2,6 +2,13 @@ Rails.application.routes.draw do
   devise_for :users
 
   root "users#index"
+
+  # Routes for the homepage with a list of users
+
+  get("/users", controller: "users", action: "index")
+  get("/users/:username", controller: "users", action: "show")
+  post("/add_user", controller: "users", action: "create")
+  post("/update_user/:user_id", controller: "users", action: "update")
   # Routes for the Like resource:
 
   # CREATE
