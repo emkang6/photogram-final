@@ -43,7 +43,10 @@
       <td>
         <% if !current_user.followers.include?(a_user) && !current_user.sent_follow_requests.map(&:recipient_id).include?(a_user.id) %>
             <form action="/insert_follow_request" method="post">
-              <input type="hidden" name="query_recipient_id" value="<%= a_user.id %>">
+            
+            <input type="hidden" name="query_sender_id" value="<%= current_user.id %>">
+            <input type="hidden" name="query_recipient_id" value="<%= a_user.id %>">
+            <input type="hidden" name="query_status" value="pending">
               <button>Follow</button>
             </form>
 
