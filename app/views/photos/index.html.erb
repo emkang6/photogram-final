@@ -14,7 +14,7 @@
       Add a new photo
     </h2>
 
-    <form action="/insert_photo" method="post">
+    <form action="/insert_photo" method="post" enctype="multipart/form-data">
       <div>
         <label for="caption_box">
           Caption
@@ -28,7 +28,7 @@
           Image
         </label>
 
-        <input type="text" id="image_box" name="query_image">
+        <input type="file" id="image_box" name="query_image">
       </div>
 
       <div>

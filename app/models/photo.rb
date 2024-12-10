@@ -13,6 +13,7 @@
 #
 class Photo < ApplicationRecord
   validates(:poster, { :presence => true })
+  mount_uploader :image, ImageUploader
 
 # Photo#likes: returns rows from the likes table associated to this photo by the photo_id column
   has_many  :likes, class_name: "Like", foreign_key: "photo_id", dependent: :destroy

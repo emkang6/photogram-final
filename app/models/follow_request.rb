@@ -30,6 +30,7 @@ class FollowRequest < ApplicationRecord
   #Scope
 
   scope :request_accepted, -> {where(status: "accepted")}
+  scope :request_pending, -> {where(status: "pending")}
 
 
 end
