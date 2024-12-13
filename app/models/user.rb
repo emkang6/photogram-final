@@ -60,7 +60,7 @@ class User < ApplicationRecord
   # User#accepted_received_follow_requests: returns rows from the follow requests table associated to this user by the recipient_id column, where status is 'accepted'
   has_many :accepted_received_follow_requests, -> {request_accepted}, class_name: "FollowRequest", foreign_key: "recipient_id"
 
-  # User#pending_received_follow_requests: returns rows from the follow requests table associated to this user by the recipient_id column, where status is 'accepted'
+  # User#pending_received_follow_requests: returns rows from the follow requests table associated to this user by the recipient_id column, where status is 'pending'
   has_many :pending_received_follow_requests, -> {request_pending}, class_name: "FollowRequest", foreign_key: "recipient_id"
 
   ## Indirect associations
