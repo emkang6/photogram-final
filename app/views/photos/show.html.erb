@@ -125,7 +125,7 @@
       </td>
 
       <td>
-        <%= a_comment.created_at %>
+        <%= time_ago_in_words(a_comment.created_at) %> ago
       </td>
     </tr>
   <% end %>

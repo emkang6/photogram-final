@@ -8,7 +8,56 @@
 
 <hr>
 
-<div>
+<% if current_user.present? %>
+  <div>
+    <h2>
+      Add a new photo
+    </h2>
+
+    <form action="/insert_photo" method="post" enctype="multipart/form-data">
+
+
+      <div>
+        <label for="image_box">
+          Image
+        </label>
+        <input type="file" id="image_box" name="query_image">
+
+        <label for="caption_box">
+          Caption
+        </label>
+
+        <textarea id="caption_box" name="query_caption" rows="2" placeholder="Enter a caption for the photo"></textarea>
+ 
+
+
+        <label for="owner_id_box"></label>
+
+        <input type="hidden" id="owner_id_box" name="query_owner_id" value="current_user.id">
+
+
+
+        <label for="likes_count_box"></label>
+
+        <input type="hidden" id="likes_count_box" name="query_likes_count" value="0">
+
+
+        <label for="comments_count_box"></label>
+
+        <input type="hidden" id="comments_count_box" name="query_comments_count" value="0">
+   
+
+      <button>
+        Add photo
+      </button>
+    </div>
+    </form>
+  </div>
+<% else %>
+
+<% end %>
+
+<!--<div>
   <div>
     <h2>
       Add a new photo
@@ -60,7 +109,7 @@
       </button>
     </form>
   </div>
-</div>
+</div>-->
 
 <hr>
 <div>
@@ -104,7 +153,7 @@
         </td>
 
         <td>
-          <%= a_photo.owner_id %>
+          <%= a_photo.poster.username %>
         </td>
 
         <td>
