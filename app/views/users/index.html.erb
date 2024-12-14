@@ -31,17 +31,42 @@
         <%= a_user.username %>
       </td>
 
+    
       <td>
       <% if a_user.private== false %>
         No
       <% else %>
         Yes
       <%end%>
+    
       </td>
 
 
       <td>
-        <% if !current_user.followers.include?(a_user) && !current_user.sent_follow_requests.map(&:recipient_id).include?(a_user.id) %>
+      <% if current_user.present? %>
+        <!--The current user is already following this user-->
+      <% if a_user.followers.include?(current_user) %>
+
+          <a href="/delete_follow_request/<%= current_user.sent_follow_requests.find_by(recipient_id: a_user.id)&.id%>">
+
+              Unfollow</a>
+
+        <!--The current user is not following this user ('a _user') and the current user has not sent a request-->
+      <% elsif !a_user.followers.include?(current_user) && !current_user.sent_follow_requests.map(&:recipient_id).include?(a_user.id) %>
+
+        <!--if this user is NOT private, status changes to accepted-->
+          <% if a_user.private == false %>
+            <form action="/insert_follow_request" method="post">
+
+            <input type="hidden" name="query_sender_id" value="<%= current_user.id %>">
+            <input type="hidden" name="query_recipient_id" value="<%= a_user.id %>">
+            <input type="hidden" name="query_status" value="accepted">
+
+              <button>Follow</button>
+            </form>
+            
+          <!--if the user is private, then status is pending-->
+          <% else %> 
             <form action="/insert_follow_request" method="post">
 
             <input type="hidden" name="query_sender_id" value="<%= current_user.id %>">
@@ -50,21 +75,17 @@
 
               <button>Follow</button>
             </form>
-
-        <% elsif current_user.accepted_sent_follow_requests.exists?(recipient_id: a_user.id) %>
-
-          <a href="/delete_follow_request/<%= current_user.sent_follow_requests.find_by(recipient_id: a_user.id)&.id%>">
-
-              Unfollow</a>
-
-        <% elsif current_user.sent_follow_requests.exists?(recipient_id: a_user.id, status: 'rejected') %>
-
-              
-        <% else %>
+          <% end %>
+      <!--The current user has sent the request and got rejected -->
+      <% elsif current_user.sent_follow_requests.find_by(recipient_id: a_user).status == "rejected" %>
+    
+      <% else %>
+        <!--current_user.sent_follow_requests.exists?(recipient_id: a_user.id, status: 'rejected')-->
 
           Request sent.<a href="/delete_follow_request/<%= current_user.sent_follow_requests.find_by(recipient_id: a_user.id)&.id %>">Cancel</a>
-        <% end %>
+      <% end %>
       </td>
+      <% end %>
 
       <td>
         <a href="/users/<%= a_user.username %>">

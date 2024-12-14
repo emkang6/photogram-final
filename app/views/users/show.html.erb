@@ -46,39 +46,33 @@
                 </button>
               </form>
 
-
                <% end %>
-          
-      
-            
           </ul>
+
+      <% end %>
+
+      <div>
+
+        <% if (@the_user.id != current_user.id) && current_user.accepted_sent_follow_requests.exists?(recipient_id: @the_user.id) %>
+
+          <form action="/insert_follow_request" method="post">
+          <input type="hidden" name="query_sender_id" value="<% current_user.id %>">
+          <input type="hidden" name="query_recipient_id" value="<% @the_user.id %>">
+          <input type="hidden" name="query_status" value="pending">
+          </form>
+
+          <button>Follow</button>
 
         <% end %>
 
-          <div>
-        <!--If you are one of their followers, show Unfollow button-->
-          <% if current_user.accepted_sent_follow_requests.exists?(recipient_id: @the_user.id) %>
-
-          <p>"ok"</p>
-
-
-            <!--<a href="/delete_follow_request/<%#= current_user.sent_follow_requests.find_by(recipient_id: @the_user.id)&.id%>">Unfollow</a>-->
-            
-          <% else %>
-
-           <!--  <a href="/insert_follow_request/<%#= current_user.sent_follow_requests.find_by(recipient_id: @the_user.id)&.id%>">
-              Follow</a>-->
 
             <form action="/insert_follow_request" method="post">
             <input type="hidden" name="query_sender_id" value="<% current_user.id %>">
             <input type="hidden" name="query_recipient_id" value="<% @the_user.id %>">
             <input type="hidden" name="query_status" value="pending">
-
-            <button>Follow</button>
             </form>
 
-          <% end %>
-          </div>
+      </div>
     </dd>
 
   <dt>Following</dt>
