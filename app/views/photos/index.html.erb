@@ -24,7 +24,7 @@
         <textarea id="caption_box" name="query_caption" rows="2" placeholder="Enter a caption for the photo"></textarea>
 
         <label for="owner_id_box"></label>
-        <input type="hidden" id="owner_id_box" name="query_owner_id" value="current_user.id">
+        <input type="hidden" id="owner_id_box" name="query_owner_id" value="<%= current_user.id %>">
 
         <label for="likes_count_box"></label>
         <input type="hidden" id="likes_count_box" name="query_likes_count" value="0">

@@ -89,7 +89,7 @@
         Edit photo
       </dt>
       <dd>
-      <form action="/modify_photo/<%#= @the_photo.id %>"  method="post" >
+      <form action="/modify_photo/<%#= @the_photo.id %>"  method="post" enctype="multipart/form-data">
 
           <label for="caption_box">Caption</label>
           <textarea id="caption_box" placeholder="Enter a caption for the photo..." name="query_caption"><%#= @the_photo.caption %></textarea>
