@@ -12,6 +12,27 @@
     <dd><%= @the_user.private %></dd>
 
     <dt>Followers</dt>
+    <div>
+    <% if current_user.id != @the_user.id %>
+      <% if @the_user.followers.include?(current_user) %>
+          <a href="/delete_follow_request/<%= current_user.sent_follow_requests.find_by(recipient_id: @the_user.id)&.id%>">
+          Unfollow</a>
+
+      <% else %>
+
+        <form action="/insert_follow_request" method="post">
+
+          <input type="hidden" name="query_sender_id" value="<%= current_user.id %>">
+          <input type="hidden" name="query_recipient_id" value="<%= @the_user.id %>">
+          <input type="hidden" name="query_status" value="pending">
+
+          <button>Follow</button>
+        </form>
+
+      <% end %>
+    
+    <% end %>
+    </div>
     <dd>
       <%= @the_user.followers.count %>
 
@@ -47,28 +68,6 @@
           </ul>
       <% end %>
 
-      <div>
-
-        <%# if (@the_user.id != current_user.id) && current_user.accepted_sent_follow_requests.exists?(recipient_id: @the_user.id) %>
-<!--
-          <form action="/insert_follow_request" method="post">
-          <input type="hidden" name="query_sender_id" value="<%# current_user.id %>">
-          <input type="hidden" name="query_recipient_id" value="<%# @the_user.id %>">
-          <input type="hidden" name="query_status" value="pending">
-          </form>
-
-          <button>Follow</button>
-
-        <%# end %>-->
-<!--
-
-            <form action="/insert_follow_request" method="post">
-            <input type="hidden" name="query_sender_id" value="<%# current_user.id %>">
-            <input type="hidden" name="query_recipient_id" value="<%# @the_user.id %>">
-            <input type="hidden" name="query_status" value="pending">
-            </form>
--->
-      </div>
     </dd>
 
   <dt>Following</dt>

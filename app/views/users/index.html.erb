@@ -65,7 +65,7 @@
               <button>Follow</button>
             </form>
             
-          <!--if the user is private, then status is pending-->
+          <!--if the user IS private, then status becomes pending-->
           <% else %> 
             <form action="/insert_follow_request" method="post">
 
@@ -80,7 +80,6 @@
       <% elsif current_user.sent_follow_requests.find_by(recipient_id: a_user).status == "rejected" %>
     
       <% else %>
-        <!--current_user.sent_follow_requests.exists?(recipient_id: a_user.id, status: 'rejected')-->
 
           Request sent.<a href="/delete_follow_request/<%= current_user.sent_follow_requests.find_by(recipient_id: a_user.id)&.id %>">Cancel</a>
       <% end %>
