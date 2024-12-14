@@ -11,6 +11,8 @@
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
+  
+<!--Added Username and Private Checkbox-->
 
   <div class="field">
     <%= f.label :username %><br />
