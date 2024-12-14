@@ -15,63 +15,59 @@
     <dd>
       <%= @the_user.followers.count %>
 
+      <!--If this page belongs to the current user-->
+    
       <% if current_user.id == @the_user.id %>
           <h4>Pending follow requests</h4>
-
           <ul>
-            
               <% current_user.pending_received_follow_requests.each do |a_request| %>
 
               <% req_sender = User.find_by(id: a_request.sender_id)%>
 
-
-
               <li><%= req_sender.username %></li>
 
-                <form action="/modify_follow_request/<%= current_user.sent_follow_requests.find_by(recipient_id: req_sender.id)&.id%>" method="post">
+
+                <form action="/modify_follow_request/<%=a_request.id %>" method="post">
                   <input name="query_status" value="accepted" type="hidden">
                   <input name="query_recipient_id" value="<%= current_user.id %>" type="hidden">
                   <input name="query_sender_id" value="<%= req_sender.id %>" type="hidden">
 
-                  <button>
-                    Accept
-                  </button>
+                  <button>Accept</button>
                 </form>
 
-              <form action="/modify_follow_request/<%= current_user.sent_follow_requests.find_by(recipient_id: req_sender.id)&.id%>" method="post">
-              <input name="query_status" value="rejected" type="hidden">
+                <form action="/modify_follow_request/<%=a_request.id %>" method="post">
+                  <input name="query_status" value="rejected" type="hidden">
+                  <input name="query_recipient_id" value="<%= current_user.id %>" type="hidden">
+                  <input name="query_sender_id" value="<%= req_sender.id %>" type="hidden">
               
-                <button>
-                  Reject
-                </button>
-              </form>
+                  <button>Reject</button>
+                </form>
 
                <% end %>
           </ul>
-
       <% end %>
 
       <div>
 
-        <% if (@the_user.id != current_user.id) && current_user.accepted_sent_follow_requests.exists?(recipient_id: @the_user.id) %>
-
+        <%# if (@the_user.id != current_user.id) && current_user.accepted_sent_follow_requests.exists?(recipient_id: @the_user.id) %>
+<!--
           <form action="/insert_follow_request" method="post">
-          <input type="hidden" name="query_sender_id" value="<% current_user.id %>">
-          <input type="hidden" name="query_recipient_id" value="<% @the_user.id %>">
+          <input type="hidden" name="query_sender_id" value="<%# current_user.id %>">
+          <input type="hidden" name="query_recipient_id" value="<%# @the_user.id %>">
           <input type="hidden" name="query_status" value="pending">
           </form>
 
           <button>Follow</button>
 
-        <% end %>
-
+        <%# end %>-->
+<!--
 
             <form action="/insert_follow_request" method="post">
-            <input type="hidden" name="query_sender_id" value="<% current_user.id %>">
-            <input type="hidden" name="query_recipient_id" value="<% @the_user.id %>">
+            <input type="hidden" name="query_sender_id" value="<%# current_user.id %>">
+            <input type="hidden" name="query_recipient_id" value="<%# @the_user.id %>">
             <input type="hidden" name="query_status" value="pending">
             </form>
-
+-->
       </div>
     </dd>
 
