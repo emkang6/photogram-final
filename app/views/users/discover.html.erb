@@ -1,0 +1,165 @@
+<h1><%= @the_user.username %></h1>
+
+<!--  <dt>
+    ID
+  </dt>
+  <dd>
+    <%#= @the_user.id %>-->
+<!--  </dd>-->
+<dl>
+  <dt>Private
+  </dt>
+    <dd><%= @the_user.private %></dd>
+
+    <dt>Followers</dt>
+    <div>
+    <% if current_user.id != @the_user.id %>
+      <% if @the_user.followers.include?(current_user) %>
+          <a href="/delete_follow_request/<%= current_user.sent_follow_requests.find_by(recipient_id: @the_user.id)&.id%>">
+          Unfollow</a>
+
+      <% else %>
+
+        <form action="/insert_follow_request" method="post">
+
+          <input type="hidden" name="query_sender_id" value="<%= current_user.id %>">
+          <input type="hidden" name="query_recipient_id" value="<%= @the_user.id %>">
+          <input type="hidden" name="query_status" value="pending">
+
+          <button>Follow</button>
+        </form>
+
+      <% end %>
+    
+    <% end %>
+    </div>
+    <dd>
+      <%= @the_user.followers.count %>
+
+      <!--If this page belongs to the current user-->
+    
+      <% if current_user.id == @the_user.id %>
+          <h4>Pending follow requests</h4>
+          <ul>
+              <% current_user.pending_received_follow_requests.each do |a_request| %>
+
+              <% req_sender = User.find_by(id: a_request.sender_id)%>
+
+              <li><%= req_sender.username %></li>
+
+
+                <form action="/modify_follow_request/<%=a_request.id %>" method="post">
+                  <input name="query_status" value="accepted" type="hidden">
+                  <input name="query_recipient_id" value="<%= current_user.id %>" type="hidden">
+                  <input name="query_sender_id" value="<%= req_sender.id %>" type="hidden">
+
+                  <button>Accept</button>
+                </form>
+
+                <form action="/modify_follow_request/<%=a_request.id %>" method="post">
+                  <input name="query_status" value="rejected" type="hidden">
+                  <input name="query_recipient_id" value="<%= current_user.id %>" type="hidden">
+                  <input name="query_sender_id" value="<%= req_sender.id %>" type="hidden">
+              
+                  <button>Reject</button>
+                </form>
+
+               <% end %>
+          </ul>
+      <% end %>
+
+    </dd>
+
+  <dt>Following</dt>
+  <dd><%= @the_user.leaders.count %></dd>
+</dl>
+
+<nav>
+  <ul>
+    <li>
+      <a href="/users/<%= @the_user.username %>">Profile</a>
+    </li>
+
+    <li>
+      <a href="/users/<%= @the_user.username %>/liked_photos">Liked photos</a>
+    </li>
+    <li>
+      <a href="/users/<%= @the_user.username %>/feed">Feed</a>
+    </li>
+    <li>
+      <a href="/users/<%= @the_user.username %>/discover">Discover</a>
+    </li>
+  </ul>
+</nav>
+
+<!--  <dt>
+    Edit user
+  </dt>-->
+<!--  <dd>
+    <form action="/update_user/<%#= @the_user.id %>" method="post">
+      <label for="browser_username">Username</label>
+      <input id="browser_username" type="text" name="input_username" value=<%#= @the_user.username %>>
+
+      <button>Update user</button>
+    </form>
+  </dd>-->
+
+<h2>Discover (<%= @the_user.discover.count %>)</h2>
+
+<table border="1">
+  <tr>
+    <th>
+      Image
+    </th>
+
+    <th>
+      Owner
+    </th>
+
+    <th>
+      Caption
+    </th>
+
+    <th>
+      Posted
+    </th>
+
+    <th>
+      Likes
+    </th>
+
+    <th>
+    </th>
+  </tr>
+
+  <% @the_user.discover.each do |a_photo| %>
+
+    <tr>
+      <td>
+        <img src=<%= a_photo.image %>>
+      </td>
+
+      <td>
+        <%= a_photo.poster.username %>
+      </td>
+
+      <td>
+        <%= a_photo.caption %>
+      </td>
+
+      <td>
+        <%= time_ago_in_words(a_photo.created_at) %> ago
+      </td>
+
+      <td>
+        <%= a_photo.likes_count %>
+      </td>
+
+      <td>
+        <a href="/photos/<%= a_photo.id %>">
+          Show details
+        </a>
+      </td>
+    </tr>
+  <% end %>
+</table>
