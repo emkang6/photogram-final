@@ -5,6 +5,7 @@ class PhotosController < ApplicationController
 
     @list_of_photos = matching_photos.order({ :created_at => :desc })
 
+    
     render({ :template => "photos/index" })
   end
 
