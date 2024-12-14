@@ -13,41 +13,56 @@
 
     <dt>Followers</dt>
     <dd>
-    
       <%= @the_user.followers.count %>
 
-       <% if current_user.id == @the_user.id %>
+      <% if current_user.id == @the_user.id %>
           <h4>Pending follow requests</h4>
 
           <ul>
-            <li>
-              <p><% current_user.pending_received_follow_requests %></p>
+            
+              <% current_user.pending_received_follow_requests.each do |a_request| %>
 
-              <form action="/modify_follow_request/1815" method="post">
-                <input name="query_status" value="accepted" type="hidden">
+              <% req_sender = User.find_by(id: a_request.sender_id)%>
 
-                <button>
-                  Accept
-                </button>
-              </form>
 
-              <form action="/modify_follow_request/1815" method="post">
-                <input name="query_status" value="rejected" type="hidden">
+
+              <li><%= req_sender.username %></li>
+
+                <form action="/modify_follow_request/<%= current_user.sent_follow_requests.find_by(recipient_id: req_sender.id)&.id%>" method="post">
+                  <input name="query_status" value="accepted" type="hidden">
+                  <input name="query_recipient_id" value="<%= current_user.id %>" type="hidden">
+                  <input name="query_sender_id" value="<%= req_sender.id %>" type="hidden">
+
+                  <button>
+                    Accept
+                  </button>
+                </form>
+
+              <form action="/modify_follow_request/<%= current_user.sent_follow_requests.find_by(recipient_id: req_sender.id)&.id%>" method="post">
+              <input name="query_status" value="rejected" type="hidden">
               
                 <button>
                   Reject
                 </button>
               </form>
-            </li>
+
+
+               <% end %>
+          
+      
+            
           </ul>
-        <% else %>
+
         <% end %>
 
           <div>
         <!--If you are one of their followers, show Unfollow button-->
           <% if current_user.accepted_sent_follow_requests.exists?(recipient_id: @the_user.id) %>
 
-            <a href="/delete_follow_request/<%= current_user.sent_follow_requests.find_by(recipient_id: @the_user.id)&.id%>">Unfollow</a>
+          <p>"ok"</p>
+
+
+            <!--<a href="/delete_follow_request/<%#= current_user.sent_follow_requests.find_by(recipient_id: @the_user.id)&.id%>">Unfollow</a>-->
             
           <% else %>
 
@@ -59,12 +74,11 @@
             <input type="hidden" name="query_recipient_id" value="<% @the_user.id %>">
             <input type="hidden" name="query_status" value="pending">
 
-            <button>Follow
-            </button>
+            <button>Follow</button>
+            </form>
 
           <% end %>
           </div>
-
     </dd>
 
   <dt>Following</dt>
