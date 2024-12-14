@@ -68,15 +68,21 @@
           <input type="hidden" value="<%= @the_photo.id %>" name="query_photo_id">
           <input type="hidden" value="<%= current_user.id %>" name="query_fan_id">
         <button>Like</button>
+      </dd>
 
       <% else %>
-        <form action="/delete_like" method="post">
-          <input type="hidden" value="<%= @the_photo.id %>" name="query_photo_id">
-          <input type="hidden" value="<%= current_user.id %>" name="query_fan_id">
-        <button>Unlike</button>
-      <% end %>
-        </form>
+       <dd>
+       <!--likes associated with this current user and the photo -->
+      <a href="/delete_like/<%= current_user.likes.find_by(photo_id: @the_photo.id).id %>">Unlike</a>
       </dd>
+      <% end %>
+
+   <!--   <form action="/delete_like" method="post">
+          <input type="hidden" value="<%#= @the_photo.id %>" name="query_photo_id">
+          <input type="hidden" value="<%#= current_user.id %>" name="query_fan_id">
+        <button>Unlike</button>
+      </form>-->
+
   
     <% if current_user.id == @the_photo.owner_id%>
       <dt>

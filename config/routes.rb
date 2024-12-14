@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   post("/modify_like/:path_id", { :controller => "likes", :action => "update" })
   
   # DELETE
-  post("/delete_like", { :controller => "likes", :action => "destroy" })
+  get("/delete_like/:id", { :controller => "likes", :action => "destroy" })
 
   #------------------------------
 
