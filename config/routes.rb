@@ -9,6 +9,13 @@ Rails.application.routes.draw do
   get("/users/:username", controller: "users", action: "show")
   post("/add_user", controller: "users", action: "create")
   post("/update_user/:user_id", controller: "users", action: "update")
+
+  # Routes for the Feed, Liked Photos, Discover
+
+  get("/users/:username/feed", controller: "users", action: "feed")
+  get("/users/:username/liked_photos", controller: "users", action: "liked")
+  get("/users/:username/discover", controller: "users", action: "discover")
+
   # Routes for the Like resource:
 
   # CREATE

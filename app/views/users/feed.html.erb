@@ -104,7 +104,7 @@
     </form>
   </dd>-->
 
-<h2>Own photos (<%= @the_user.own_photos.count %>)</h2>
+<h2>Feed (<%= @the_user.feed.count %>)</h2>
 
 <table border="1">
   <tr>
@@ -132,7 +132,7 @@
     </th>
   </tr>
 
-  <% @the_user.own_photos.each do |a_photo| %>
+  <% @the_user.feed.each do |a_photo| %>
 
     <tr>
       <td>
